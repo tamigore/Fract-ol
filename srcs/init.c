@@ -9,7 +9,7 @@ static t_res	init_res(char *set, t_env *env)
 	if (set == NULL)
 	{
 		res.check = 1;
-		res.x = RES_DEF;
+		res.x = RES_DEF + RES_DEF / 2;
 		res.y = RES_DEF;
 		return (res);
 	}

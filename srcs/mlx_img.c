@@ -15,6 +15,10 @@ t_img		*init_img(t_env *env)
 	img->ptr = mlx_new_image(env->mlx, img->size_x, img->size_y);
 	img->pixels = mlx_get_data_addr(img->ptr, &(img->bpp),
 				&(img->size_line), &(img->endian));
+	img->ori_x = 0;
+	img->ori_y = 0;
+	img->scale = 1;
+	img->prev = NULL;
 	img->next = NULL;
 	return (img);
 }
@@ -30,6 +34,7 @@ void		append_image(t_img **imgs, t_img *new)
 		tmp = *imgs;
 		while (tmp->next)
 			tmp = tmp->next;
+		new->prev = tmp;
 		tmp->next = new;
 	}
 	else

@@ -27,7 +27,7 @@
 
 # define ABS(x) (x < 0 ? -x : x)
 # define RES_MIN 300
-# define RES_DEF 1200
+# define RES_DEF 1000
 
 /*
 ** t_set = struct for resolution
@@ -111,6 +111,10 @@ typedef struct		s_img
 	int				bpp;
 	int				size_line;
 	int				endian;
+	double			scale;
+	int				ori_x;
+	int				ori_y;
+	struct s_img	*prev;
 	struct s_img	*next;
 }					t_img;
 
@@ -128,6 +132,7 @@ void        print(int opt, t_env *env);
 void		graphic_loop(t_env *env);
 int			next_cam(int keycode, t_env *env);
 void		graphic_loop(t_env *env);
+int			zoom(t_env *env, int opt);
 
 /*
 ** mlx_img.c
@@ -305,7 +310,7 @@ void			M_set(t_env *env);
 ** Functions keys, you might use fn key to use them
 ** Seems that did not work. I don't know. Deso pas deso, au pire on les use pas.
 */
-
+/*
 # define F1_KEY 122
 # define F2_KEY 120
 # define F3_KEY 99
@@ -325,13 +330,13 @@ void			M_set(t_env *env);
 # define F17_KEY 64
 # define F18_KEY 79
 # define F19_KEY 80
-
+*/
 /*
 ** Arrow keys
 */
 
-# define UP_KEY 126
-# define DOWN_KEY 125
+# define UP_KEY 0xff52
+# define DOWN_KEY 0xff54
 # define RIGHT_KEY 65363
 # define LEFT_KEY 65361
 

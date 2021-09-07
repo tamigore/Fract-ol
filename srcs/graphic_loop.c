@@ -7,14 +7,43 @@ int			close_program(void *param)
 	return (1);
 }
 
-int			next_cam(int keycode, t_env *env)
+int			zoom(t_env *env, int opt)
+{
+	t_img	*tmp;
+
+	tmp = init_img(env);
+	if (opt == 1)
+	{
+		tmp->scale = env->img->scale * 0.9;
+		append_image(&(env->img), tmp);
+		env->img = env->img->next;
+		M_set(env);
+	}
+	else
+	{
+		if (env->img->prev)
+			env->img = env->img->prev;
+		else
+		{
+			tmp->scale = env->img->scale * 1.1;
+			tmp->next = env->img;
+			env->img->prev = tmp;
+			env->img = env->img->prev;
+			M_set(env);
+		}
+	}
+	mlx_put_image_to_window(env->mlx, env->win, env->img->ptr, 0, 0);
+	return (1);
+}
+
+int			cam(int keycode, t_env *env)
 {
 	if (keycode == ESC_KEY)
 		exit(0);
-	if (keycode != SP_KEY)
-		return (0);
-	env->img = env->img->next;
-	mlx_put_image_to_window(env->mlx, env->win, env->img->ptr, 0, 0);
+	if (keycode == UP_KEY)
+		zoom(env, 1);
+	if (keycode == DOWN_KEY)
+		zoom(env, 0);
 	return (1);
 }
 
@@ -22,7 +51,7 @@ void		graphic_loop(t_env *env)
 {
 	env->win = mlx_new_window(env->mlx, env->res.x, env->res.y, "fract-ol");
 	mlx_put_image_to_window(env->mlx, env->win, env->img->ptr, 0, 0);
-	mlx_hook(env->win, DESTROYNOTIFY, STRUCTURENOTIFYMASK, close_program, 0);
-	mlx_hook(env->win, KEYPRESS, KEYPRESSMASK, next_cam, env);
+	mlx_hook(env->win, LEAVENOTIFY, STRUCTURENOTIFYMASK, close_program, 0);
+	mlx_hook(env->win, KEYPRESS, KEYPRESSMASK, cam, env);
 	mlx_loop(env->mlx);
 }
