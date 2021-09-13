@@ -1,4 +1,4 @@
-#include "fract-ol.h"
+#include "fractol.h"
 
 static t_res	init_res(char *set, t_env *env)
 {
@@ -64,6 +64,30 @@ static t_set	init_set(char *opt)
 	return (set);
 }
 
+static void		init_mouse(t_env *env)
+{
+	env->mouse.isdown = 0;
+	env->mouse.lastx = 0;
+	env->mouse.lasty = 0;
+	env->mouse.x = 0;
+	env->mouse.y = 0;
+	if (env->set.M)
+		env->mouse.lock = 0;
+	else if (env->set.J)
+		env->mouse.lock = 1;
+	else
+		env->mouse.lock = 0;
+}
+
+void		reset_view(t_env *env)
+{
+	env->view.offx = 0;
+	env->view.offy = 0;
+	view_scale(env);
+	env->view.max = 32;
+	env->view.zoom = 1.0f;
+}
+
 t_env           *init(int ac, char **av)
 {
     t_env		*env;
@@ -91,6 +115,8 @@ t_env           *init(int ac, char **av)
 	if (env->res.y > y)
 		env->res.y = y;
     env->img = init_img(env);
+	reset_view(env);
+	init_mouse(env);
 	print(1, env);
     return (env);
 }

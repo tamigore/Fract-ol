@@ -1,4 +1,4 @@
-#include "fract-ol.h"
+#include "fractol.h"
 
 t_img		*init_img(t_env *env)
 {

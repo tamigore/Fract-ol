@@ -1,4 +1,4 @@
-#include "fract-ol.h"
+#include "fractol.h"
 
 void        free_all(t_env *env, int opt)
 {
@@ -40,7 +40,7 @@ int         main(int ac, char **av)
         exit(EXIT_FAILURE);
     }
     env = init(ac, av);
-	M_set(env);
+    render(env);
 	graphic_loop(env);
     free_all(env, 1);
     return (0);
