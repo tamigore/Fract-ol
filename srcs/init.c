@@ -79,15 +79,6 @@ static void		init_mouse(t_env *env)
 		env->mouse.lock = 0;
 }
 
-void		reset_view(t_env *env)
-{
-	env->view.offx = 0;
-	env->view.offy = 0;
-	view_scale(env);
-	env->view.max = 32;
-	env->view.zoom = 1.0f;
-}
-
 t_env           *init(int ac, char **av)
 {
     t_env		*env;
@@ -108,14 +99,18 @@ t_env           *init(int ac, char **av)
 		env->res = init_res(av[1], env);
 	}
     env->mlx = mlx_init();
-    env->win = NULL;
+    if (!env->mlx)
+		free_all(env, 1);
 	mlx_get_screen_size(env->mlx, &x, &y);
 	if (env->res.x > x)
 		env->res.x = x;
 	if (env->res.y > y)
 		env->res.y = y;
-    env->img = init_img(env);
-	reset_view(env);
+	env->win = mlx_new_window(env->mlx, env->res.x, env->res.y, "fractol");
+	env->img = init_img(env);
+	if (!env->win || !env->img)
+		free_all(env, 1);
+	init_view(env);
 	init_mouse(env);
 	print(1, env);
     return (env);

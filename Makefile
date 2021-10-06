@@ -16,13 +16,14 @@ SOURCES =	main.c 			\
 			graphic_loop.c	\
 			fractol.c		\
 			mouse.c			\
-			render.c
+			render.c		\
+			view.c
 
 SRCS = $(addprefix $(DIR_S),$(SOURCES))
 
 OBJS = $(SRCS:.c=.o)
 
-CFLAGS = -Wall -Werror -Wextra -I $(HEADER) -D NUM_THREADS=$(NUM_THREADS)
+CFLAGS = -Wall -Werror -Wextra -I $(HEADER) #-D NUM_THREADS=$(NUM_THREADS)
 
 FLAGS = -L $(LIBFT) -lft -L $(LIBMATH) -lmath
 
@@ -32,7 +33,7 @@ LINUX_MACRO = -D LINUX
 
 MACOS_FLAGS = -L $(LIB)minilibx_opengl_20191021 -lmlx -framework Appkit -framework OpenGL
 
-LINUX_FLAGS = -L $(LIB)minilibx-linux -lmlx -lm -lX11 -lXext -lpthread
+LINUX_FLAGS = -L $(LIB)minilibx-linux -lmlx -lm -lX11 -lXext #-lpthread
 
 UNAME := $(shell uname)
 

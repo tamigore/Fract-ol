@@ -2,14 +2,16 @@
 
 int		mouse_down(int button, int x, int y, t_env * env)
 {
+	(void)x;
+	(void)y;
 	if (button == 4)
 	{
-		zoom(env, x, y, 1 / 1.1);
+		zoom(env, 1 / 1.1, NULL);
 		render(env);
 	}
 	else if (button == 5)
 	{
-		zoom(env, x, y, 1.1);
+		zoom(env, 1.1, NULL);
 		render(env);
 	}
 	if (y < 0)
@@ -49,7 +51,7 @@ int		mouse_move(int x, int y, t_env *env)
 		env->view.offx += (double)(env->mouse.lastx - env->mouse.x) / env->res.x * w;
 		env->view.offy += (double)(env->mouse.lasty - env->mouse.y) / env->res.y * h;
 	}
-	if (env->mouse.isdown || (!env->mouse.lock))
+	if (env->mouse.isdown)
 		render(env);
 	return (0);
 }

@@ -1,0 +1,21 @@
+{
+	"folders": [
+		{
+			"path": ".."
+		},
+		{
+			"path": "../../../42test/miniRT"
+		},
+		{
+			"path": "../../test_fract"
+		}
+	],
+	"settings": {
+		"files.associations": {
+			"stdlib.h": "c",
+			"fract-ol.h": "c",
+			"stdio.h": "c",
+			"fractol.h": "c"
+		}
+	}
+}

@@ -156,9 +156,8 @@ void        print(int opt, t_env *env);
 ** graphic_loop.c
 */
 
-void		zoom(t_env *env, int x, int y, double z);
+void		zoom(t_env *env, double z, int *valid);
 void		move(int key, t_env *env);
-void		view_scale(t_env *env);
 int			key(int keycode, t_env *env);
 int			expose(t_env *env);
 void		graphic_loop(t_env *env);
@@ -184,7 +183,6 @@ void		delete_images(t_img **imgs, void *mlx_ptr);
 */
 
 t_env           *init(int ac, char **av);
-void			reset_view(t_env *env);
 
 /*
 ** fractol.c
@@ -199,6 +197,14 @@ double			M_set(t_env *env, int px, int py);
 void			put_pixel_to_img(t_env *env, t_v3 color, int x, int y);
 t_v3			palette(int	x);
 void       		render(t_env *env);
+
+/*
+**	view.c
+*/
+
+void			init_view(t_env * env);
+void			reset_view(t_env *env);
+void			view_scale(t_env *env);
 
 /*
 **	mlx
