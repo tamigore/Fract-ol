@@ -4,8 +4,8 @@ t_cmplx		c_new(double x, double y)
 {
 	t_cmplx	z;
 
-	z.real = x;
-	z.imag = y;
+	z.r = x;
+	z.i = y;
 	return (z);
 }
 
@@ -13,8 +13,8 @@ t_cmplx		c_add(t_cmplx z, t_cmplx c)
 {
 	t_cmplx	add;
 
-	add.real = z.real + c.real;
-	add.imag = z.imag + c.imag;
+	add.r = z.r + c.r;
+	add.i = z.i + c.i;
 	return (add);
 }
 
@@ -22,8 +22,8 @@ t_cmplx		c_dif(t_cmplx z, t_cmplx c)
 {
 	t_cmplx	dif;
 
-	dif.real = z.real - c.real;
-	dif.imag = z.imag - c.imag;
+	dif.r = z.r - c.r;
+	dif.i = z.i - c.i;
 	return (dif);
 }
 
@@ -31,8 +31,8 @@ t_cmplx		c_multi(t_cmplx x, t_cmplx y)
 {
 	t_cmplx	c;
 
-	c.real = (x.real * y.real) - (x.imag * y.imag);
-	c.imag = (x.imag * y.real) + (x.real * y.imag);
+	c.r = (x.r * y.r) - (x.i * y.i);
+	c.i = (x.i * y.r) + (x.r * y.i);
 	return (c);
 }
 
@@ -40,6 +40,6 @@ double		c_abs(t_cmplx z)
 {
 	double	nb;
 
-	nb = sqrt((z.real * z.real) + (z.imag * z.imag));
+	nb = sqrt((z.r * z.r) + (z.i * z.i));
 	return (nb);
 }

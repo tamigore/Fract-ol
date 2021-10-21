@@ -1,5 +1,5 @@
-#ifndef _FRACT_OL_H_
-# define _FRACT_OL_H_
+#ifndef _FRACTOL_H_
+# define _FRACTOL_H_
 
 # include <unistd.h>
 # include <fcntl.h>
@@ -17,15 +17,15 @@
 # define END 0
 # define TITLE "Fract-ol"
 # define PIXEL_LEN 4
+# define ZOOM 1.2
 
 # define MAX_RGB 255
 # define TRANS 3
 # define RED 2
 # define GREEN 1
 # define BLUE 0
-# define MAX_ITER 1000
+# define MAX_ITER 255
 
-# define ABS(x) (x < 0 ? -x : x)
 # define RES_MIN 300
 # define RES_DEF 1000
 
@@ -41,8 +41,6 @@ typedef struct		s_set
 {
 	int				M;
 	int				J;
-    int             a;
-    int             c;
 }					t_set;
 
 /*
@@ -59,6 +57,26 @@ typedef struct		s_res
 	int				x;
 	int				y;
 }					t_res;
+
+typedef struct		s_mouse
+{
+	int			x;
+	int			y;
+	int			lastx;
+	int			lasty;
+}					t_mouse;
+
+typedef struct		s_view
+{
+	double		xmin;
+	double		xmax;
+	double		ymin;
+	double		ymax;
+	double		zoom;
+	double		offx;
+	double		offy;
+	long		max;
+}					t_view;
 
 /*
 ** t_env = main struct
@@ -86,6 +104,8 @@ typedef struct		s_env
 	void			*win;
 	struct s_res	res;
 	struct s_img	*img;
+	struct s_view	view;
+	struct s_mouse	mouse;
 }					t_env;
 
 /*
@@ -114,8 +134,6 @@ typedef struct		s_img
 	double			scale;
 	int				ori_x;
 	int				ori_y;
-	struct s_img	*prev;
-	struct s_img	*next;
 }					t_img;
 
 /*
@@ -132,15 +150,14 @@ void        print(int opt, t_env *env);
 void		graphic_loop(t_env *env);
 int			next_cam(int keycode, t_env *env);
 void		graphic_loop(t_env *env);
-int			zoom(t_env *env, int opt);
+void		zoom(t_env *env, double z, int opt);
 
 /*
 ** mlx_img.c
 */
 
 t_img		*init_img(t_env *env);
-void		append_image(t_img **imgs, t_img *new);
-void		delete_images(t_img **imgs, void *mlx_ptr);
+void		delete_images(t_img *img, void *mlx_ptr);
 
 /*
 ** init.c
@@ -149,7 +166,18 @@ void		delete_images(t_img **imgs, void *mlx_ptr);
 t_env           *init(int ac, char **av);
 
 
-void			M_set(t_env *env);
+int			M_set(t_cmplx z0);
+
+void 		render(t_env *env);
+
+/*
+**	mouse.c
+*/
+
+
+int		mouse_zoom(int button, int x, int y, t_env * env);
+int		mouse_up(int button, int x, int y, t_env *env);
+int		mouse_move(int x, int y, t_env *env);
 
 /*
 **	mlx
@@ -402,10 +430,10 @@ void			M_set(t_env *env);
 # define NK9_KEY 92
 # define NK0_KEY 82
 # define NKEQ_KEY 81
-# define NKSL_KEY 75
-# define NKWC_KEY 67
-# define NKMN_KEY 78
-# define NKPL_KEY 69
+# define NK_DIV_KEY 75
+# define NK_MULTI_KEY 67
+# define NK_MOINS_KEY 65453
+# define NK_PLUS_KEY 65451
 # define NKPT_KEY 65
 # define NKNTR_KEY 76
 

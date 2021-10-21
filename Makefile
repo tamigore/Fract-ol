@@ -1,4 +1,4 @@
-NAME = fract-ol
+NAME = fractol
 
 LIB = lib/
 
@@ -11,10 +11,12 @@ DIR_S = srcs/
 HEADER = includes/
 
 SOURCES =	main.c 			\
-			mlx_img.c		\
+			img.c			\
 			init.c			\
 			graphic_loop.c	\
-			creat.c
+			Mandelbrot.c	\
+			render.c		\
+			mouse.c
 
 SRCS = $(addprefix $(DIR_S),$(SOURCES))
 

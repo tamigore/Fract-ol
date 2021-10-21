@@ -35,8 +35,8 @@
 
 typedef struct	s_cmplx
 {
-	double		real;
-	double		imag;
+	double		r;
+	double		i;
 }				t_cmplx;
 
 /*

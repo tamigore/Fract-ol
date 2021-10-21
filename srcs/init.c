@@ -1,96 +1,111 @@
-#include "fract-ol.h"
+#include "fractol.h"
 
-static t_res	init_res(char *set, t_env *env)
+static void	init_res(char *set, t_env *env)
 {
-    int         i;
-	t_res		res;
+	int         i;
 
-    i = 0;
+	i = 0;
 	if (set == NULL)
 	{
-		res.check = 1;
-		res.x = RES_DEF + RES_DEF / 2;
-		res.y = RES_DEF;
-		return (res);
+		env->res.check = 1;
+		env->res.x = RES_DEF + RES_DEF / 2;
+		env->res.y = RES_DEF;
+		return ;
 	}
-    while (set[i])
-    {
-        if (set[i] == 'r')
-        {
-        	env->res.x = ft_atoi(&set[i]);
-			env->res.y = ft_atoi(&set[i]);
-        }
-        i++;
-    }
+	while (set[i] &&set[i] != 'r')
+		i++;
+	if (set[i] == 'r')
+	{
+		i++;
+		env->res.x = ft_atoi(&set[i]);
+		while (set[i] && set[i] != '.')
+			i++;
+		i++;
+		env->res.y = ft_atoi(&set[i]);
+	}
 	if (env->res.x < RES_MIN)
 		env->res.x = RES_DEF;
 	if (env->res.y < RES_MIN)
 		env->res.y = RES_DEF;
-	res.check = 1;
-	return (res);
+	env->res.check = 1;
 }
 
-static t_set	init_set(char *opt)
+static void	init_set(char *opt, t_env *env)
 {
 	int			i;
-	t_set		set;
 
 	i = 0;
 	if (opt == NULL)
 	{
-		set.M = 1;
-		set.J = 0;
-		set.a = 0;
-		return (set);
+		env->set.M = 1;
+		env->set.J = 0;
+		return ;
 	}
-	set.M = 0;
-	set.J = 0;
-	set.a = 0;
+	env->set.M = 0;
+	env->set.J = 0;
 	while (opt[i])
 	{
 		if (opt[i] == 'M')
-			set.M = 1;
+			env->set.M = 1;
 		else if (opt[i] == 'J')
 		{
-			if (opt[i + 1] >= 0 && opt[i + 1] <= '9')
-				set.J = ft_atoi(&opt[++i]);
-			else
-				set.J = 1;
+			env->set.J = 1;
+			if (opt[i + 1] >= '0' && opt[i + 1] <= '9')
+			{
+				i++;
+				env->set.J = ft_atoi(&opt[i]);
+			}
 		}
 		i++;
 	}
-	if (set.M > 0 && set.J > 0)
-		set.J = 0;
-	return (set);
+	if (env->set.M > 0 && env->set.J > 0)
+		env->set.J = 0;
+}
+
+static	void	init_mouse_view(t_env *env)
+{
+	env->mouse.x = 0;
+	env->mouse.y = 0;
+	env->mouse.lastx = 0;
+	env->mouse.lasty = 0;
+	env->view.xmin = -2;
+	env->view.xmax = 2;
+	env->view.ymin = -1;
+	env->view.ymax = 1;
+	env->view.zoom = 1;
+	env->view.offx = 0;
+	env->view.offy = 0;
+	env->view.max = MAX_ITER;
 }
 
 t_env           *init(int ac, char **av)
 {
-    t_env		*env;
-    int			x;
+	t_env		*env;
+	int			x;
 	int			y;
 
-    env = (t_env *)malloc(sizeof(t_env));
-    if (!env)
-        free_all(env, 0);
-    if (ac == 1)
+	env = (t_env *)malloc(sizeof(t_env));
+	if (!env)
+		free_all(env, 0);
+	if (ac == 1)
 	{
-		env->res = init_res(NULL, env);
-		env->set = init_set(NULL);
+		init_res(NULL, env);
+		init_set(NULL, env);
 	}
-    else
+	else
 	{
-		env->set = init_set(av[1]);
-		env->res = init_res(av[1], env);
+		init_set(av[1], env);
+		init_res(av[1], env);
 	}
-    env->mlx = mlx_init();
-    env->win = NULL;
+	env->mlx = mlx_init();
 	mlx_get_screen_size(env->mlx, &x, &y);
 	if (env->res.x > x)
 		env->res.x = x;
 	if (env->res.y > y)
 		env->res.y = y;
-    env->img = init_img(env);
+	env->win = mlx_new_window(env->mlx, env->res.x, env->res.y, "fractol");
+	env->img = init_img(env);
+	init_mouse_view(env);
 	print(1, env);
-    return (env);
+	return (env);
 }
