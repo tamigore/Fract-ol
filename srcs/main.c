@@ -1,6 +1,6 @@
 #include "fractol.h"
 
-void        free_all(t_env *env, int opt)
+int        free_all(t_env *env, int opt)
 {
     if (env)
     {
@@ -17,7 +17,7 @@ void        free_all(t_env *env, int opt)
 void        print(int opt, t_env *env)
 {
     if (opt == 0)
-        printf("Usage :./fract-ol -(options: M(Mandelbrot set), J(Julia set :\"J6\"), r(resolution :\"r500.800\")\n");
+        printf("Usage :./fract-ol -(options: M(Mandelbrot set), J(Julia set :\"J1.02:0.5\"), r(resolution :\"r500.800\")\n");
     else if (opt == 1)
     {
         printf("Parameters:\n");

@@ -41,6 +41,8 @@ typedef struct		s_set
 {
 	int				M;
 	int				J;
+	t_cmplx			c;
+	double			radius;
 }					t_set;
 
 /*
@@ -131,16 +133,13 @@ typedef struct		s_img
 	int				bpp;
 	int				size_line;
 	int				endian;
-	double			scale;
-	int				ori_x;
-	int				ori_y;
 }					t_img;
 
 /*
 ** main.c
 */
 
-void        free_all(t_env *env, int opt);
+int			free_all(t_env *env, int opt);
 void        print(int opt, t_env *env);
 
 /*
@@ -165,7 +164,7 @@ void		delete_images(t_img *img, void *mlx_ptr);
 
 t_env           *init(int ac, char **av);
 
-
+int			J_set(t_env *env, t_cmplx z0);
 int			M_set(t_cmplx z0);
 
 void 		render(t_env *env);

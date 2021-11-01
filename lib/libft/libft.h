@@ -94,6 +94,7 @@ void			ft_memdel(void **ap);
 **	OTHERS
 */
 
+double			ft_atof(char *str);
 int				ft_atoi(const char *str);
 long long int	ft_superatoi(char *str);
 void			ft_bzero(void *s, size_t n);

@@ -23,7 +23,8 @@ SRC/M = ft_memset.c		\
 		ft_memcmp.c		\
 		ft_memdel.c
 
-SRC/O = ft_atoi.c		\
+SRC/O = ft_atof.c		\
+		ft_atoi.c		\
 		ft_superatoi.c	\
 		ft_bzero.c		\
 		ft_tolower.c	\

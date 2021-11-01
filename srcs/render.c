@@ -57,6 +57,29 @@ static t_v3		palette(int	x)
 	return (color);
 }
 
+double		pixel_point(t_env *env, int p, char opt)
+{
+	double	z;
+
+
+	if ((env->res.x / env->res.y) < 1)
+		z = env->res.y / env->res.x;
+	else
+		z = env->res.x / env->res.y;
+	if (env->set.M)
+	{
+		if (opt == 'y')
+			return (((2 * ((p + 0.5) / env->res.y)) - 1) * env->view.zoom + env->view.offy);
+		else	
+			return (((3.5 * ((p + 0.5) / env->res.x)) - 2) * env->view.zoom + env->view.offx);
+	}
+	else
+		if (opt == 'y')
+			return ((2 * env->set.radius * ((p + 0.5) - env->res.y) / 2) * env->view.zoom + env->view.offy);
+		else
+			return ((2 * env->set.radius * ((p + 0.5) - env->res.x) / 2) * env->view.zoom + env->view.offx);
+}
+
 void 		render(t_env *env)
 {
 	int 	px;
@@ -75,10 +98,14 @@ void 		render(t_env *env)
 			z0.i *= env->res.y / env->res.x;
 		while (px < env->res.x)
 		{
-			z0.r = ((3.5 * ((px + 0.5) / env->res.x)) - 2) * env->view.zoom + env->view.offx;
-			if ((env->res.x / env->res.y) > 1)
+			z0.r = ((3.5 * ((px + 0.5) / env->res.x)) - 2) *
+				env->view.zoom + env->view.offx;
+			if ((env->res.x / env->res.y) >= 1)
 				z0.r *= env->res.x / env->res.y;
-			i = M_set(z0);
+			if (env->set.M)
+				i = M_set(z0);
+			else
+				i = J_set(env, z0);
 			color = palette(i);
 			put_pixel_to_img(env, color, px, py);
 			px++;

@@ -1,3 +1,5 @@
+CC = clang
+
 NAME = fractol
 
 LIB = lib/
@@ -14,7 +16,7 @@ SOURCES =	main.c 			\
 			img.c			\
 			init.c			\
 			graphic_loop.c	\
-			Mandelbrot.c	\
+			fractal.c		\
 			render.c		\
 			mouse.c
 
@@ -51,7 +53,7 @@ all: $(NAME)
 
 $(NAME): $(OBJS) $(HEADER) $(LIBFT)
 	make -C $(LIBFT)
-	gcc -g $(CFLAGS) $(OBJS) $(FLAGS) -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJS) $(FLAGS) -o $(NAME)
 
 norme:
 	norminette ./$(LIB)

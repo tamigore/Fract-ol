@@ -10,21 +10,20 @@ void		zoom(t_env *env, double z, int opt)
 	w = (env->view.xmax - env->view.xmin) * (env->view.zoom);
 	h = (env->view.ymax - env->view.ymin) * (env->view.zoom);
 	env->view.zoom *= z;
-	nw = (env->view.xmax - env->view.xmin) * (env->view.zoom);
-	nh = (env->view.ymax - env->view.ymin) * (env->view.zoom);
 	if (opt == 1)
 	{
-
-		env->view.offx -= (((double)(env->mouse.x) /
-			(double)env->res.x) * (4 * z)) - (((double)(env->mouse.x) /
-			(double)env->res.x) * (2 * z));
-		env->view.offy -= (((double)(env->mouse.y) /
-			(double)env->res.y) * nh) - (((double)(env->mouse.y) /
-			(double)env->res.y) * (nh - h));
-		printf("offx = %f // offy = %f\n", env->view.offx, env->view.offy);
+		env->view.offx += (3.5 * ((double)env->mouse.x / env->res.x) - 2) * env->view.zoom;
+		env->view.offy += (2 * ((double)env->mouse.y / env->res.y) - 1) * env->view.zoom;
+	}
+	else if (opt == 2)
+	{
+		env->view.offx -= (3.5 * ((double)env->mouse.x / env->res.x) - 2) * env->view.zoom;
+		env->view.offy -= (2 * ((double)env->mouse.y / env->res.y) - 1) * env->view.zoom;
 	}
 	else
 	{
+		nw = (env->view.xmax - env->view.xmin) * (env->view.zoom);
+		nh = (env->view.ymax - env->view.ymin) * (env->view.zoom);
 		env->view.offx -= ((env->res.x / 2) / env->res.x) * (nw - w);
 		env->view.offy -= ((env->res.y / 2) / env->res.y) * (nh - h);
 	}
@@ -72,5 +71,6 @@ void		graphic_loop(t_env *env)
 {
 	mlx_key_hook(env->win, key, env);
 	mlx_mouse_hook(env->win, mouse_zoom, env);
+	mlx_hook(env->win, 0, 17, free_all, env);
 	mlx_loop(env->mlx);
 }

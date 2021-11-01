@@ -13,7 +13,7 @@ int		mouse_zoom(int button, int x, int y, t_env * env)
 	}
 	else if (button == 5)
 	{
-		zoom(env, ZOOM, 1);
+		zoom(env, ZOOM, 2);
 		render(env);
 	}
 	if (y < 0)
