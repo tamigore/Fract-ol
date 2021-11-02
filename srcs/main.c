@@ -1,6 +1,6 @@
 #include "fractol.h"
 
-int        free_all(t_env *env, int opt)
+int        free_all(t_env *env)
 {
     if (env)
     {
@@ -8,10 +8,7 @@ int        free_all(t_env *env, int opt)
             free(env->img);
 		free(env);
     }
-    if (!opt)
-        exit(EXIT_FAILURE);
-    else
-        exit(EXIT_SUCCESS);
+    exit(EXIT_SUCCESS);
 }
 
 void        print(int opt, t_env *env)
@@ -24,7 +21,7 @@ void        print(int opt, t_env *env)
         if (env->set.M > 0)
 			printf("Mandelbrot set\n");
 		else if (env->set.J > 0)
-			printf("Julia set: z0 = %d\n", env->set.J);
+			printf("Julia set: %d\nz0.r = %f // z0.i = %f\n", env->set.J, env->set.c.r, env->set.c.i);
         printf("Resolution: %d.x | %d.y\n", env->res.x, env->res.y);
     }
 }
@@ -42,6 +39,6 @@ int         main(int ac, char **av)
     env = init(ac, av);
 	render(env);
 	graphic_loop(env);
-    free_all(env, 1);
+    free_all(env);
     return (0);
 }

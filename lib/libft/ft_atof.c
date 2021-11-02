@@ -9,10 +9,11 @@ double	ft_atof(char *str)
 
 	i = 0;
 	nb = 0;
+	fract = 0;
 	while ((str[i] <= '\r' && str[i] >= '\t') || str[i] == ' ')
 		i++;
 	inter = ft_superatoi(&str[i]);
-	while (str[i] && str[i] >= '0' && str[i] <= '9')
+	while (str[i] && str[i] != '.')
 		i++;
 	if (str[i] == '.')
 	{
@@ -23,5 +24,7 @@ double	ft_atof(char *str)
 			nb /= 10;
 	}
 	nb += (double)inter;
+	if (ft_strchr(str, '-') && nb > 0)
+		nb *= -1;
 	return (nb);
 }

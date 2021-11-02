@@ -6,7 +6,7 @@ t_img		*init_img(t_env *env)
 
 	img = (t_img *)malloc(sizeof(t_img));
 	if (!img)
-		free_all(env, 0);
+		free_all(env);
 	img->size_x = env->res.x;
 	img->size_y = env->res.y;
 	img->bpp = 32;

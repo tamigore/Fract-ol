@@ -24,7 +24,7 @@ static void	init_res(char *set, t_env *env)
 		env->res.y = ft_atoi(&set[i]);
 	}
 	if (env->res.x < RES_MIN)
-		env->res.x = RES_DEF;
+		env->res.x = RES_DEF + RES_DEF / 2;
 	if (env->res.y < RES_MIN)
 		env->res.y = RES_DEF;
 	env->res.check = 1;
@@ -38,18 +38,13 @@ static void	set(t_env *env, char *opt, int i)
 	{
 		env->set.J = 1;
 		i++;
-		ft_putstr("in\n");
-		if (opt[i + 1] >= '0' && opt[i + 1] <= '9')
+		env->set.c.r = ft_atof(&opt[i]);
+		while(opt[i] && opt[i] != ':')
+			i++;
+		if (opt[i] == ':')
 		{
-			ft_putstr("in atof\n");
-			env->set.c.r = ft_atof(&opt[i]);
-			while(opt[i] && opt[i] >= '0' && opt[i] <= '9')
-				i++;
-			if (opt[i] == ':')
-			{
-				i++;
-				env->set.c.i = ft_atof(&opt[i]);
-			}
+			i++;
+			env->set.c.i = ft_atof(&opt[i]);
 		}
 		else
 		{
@@ -78,8 +73,7 @@ static void	init_set(char *opt, t_env *env)
 	if (opt[i] == '-')
 		set(env, opt, ++i);
 	if (env->set.J)
-		env->set.radius = 2;
-	printf("c.r = %f || c.i = %f\n", env->set.c.r, env->set.c.i);
+		env->set.radius = 4;
 	if (env->set.M > 0 && env->set.J > 0)
 		env->set.J = 0;
 }
@@ -92,7 +86,7 @@ static	void	init_mouse_view(t_env *env)
 		env->view.xmax = 2;
 		env->view.ymin = -1;
 		env->view.ymax = 1;
-		env->view.offx = -0.5;
+		env->view.offx = -0.25;
 	}
 	else
 	{
@@ -100,7 +94,7 @@ static	void	init_mouse_view(t_env *env)
 		env->view.xmax = 2;
 		env->view.ymin = -1;
 		env->view.ymax = 1;
-		env->view.offx = 0;
+		env->view.offx = 0.25;
 	}
 	env->mouse.x = 0;
 	env->mouse.y = 0;
@@ -119,7 +113,7 @@ t_env           *init(int ac, char **av)
 
 	env = (t_env *)malloc(sizeof(t_env));
 	if (!env)
-		free_all(env, 0);
+		free_all(env);
 	if (ac == 1)
 	{
 		init_res(NULL, env);
@@ -132,15 +126,18 @@ t_env           *init(int ac, char **av)
 	}
 	env->mlx = mlx_init();
 	if (!env->mlx)
-		free_all(env, 0);
-	mlx_get_screen_size(env->mlx, &x, &y);
+		free_all(env);
+	x = MAX_RES_X;
+	y = MAX_RES_Y;
+	if (!MACOS)
+		mlx_get_screen_size(env->mlx, &x, &y);
 	if (env->res.x > x)
 		env->res.x = x;
 	if (env->res.y > y)
 		env->res.y = y;
 	env->win = mlx_new_window(env->mlx, env->res.x, env->res.y, "fractol");
 	if (!env->win)
-		free_all(env, 0);
+		free_all(env);
 	env->img = init_img(env);
 	init_mouse_view(env);
 	print(1, env);

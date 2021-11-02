@@ -49,16 +49,16 @@ void	move(int key, t_env *env)
 int			key(int keycode, t_env *env)
 {
 	if (keycode == ESC_KEY)
-		free_all(env, 1);
-	if (keycode == NK_MULTI_KEY)
+		free_all(env);
+	if (keycode == MULTI_KEY)
 		if (env->view.max < 10000)
 			env->view.max *= 2;
-	if (keycode == NK_DIV_KEY)
+	if (keycode == DIV_KEY)
 		if (env->view.max / 2 >= 2)
 			env->view.max /= 2;
-	if (keycode == NK_PLUS_KEY)
+	if (keycode == PLUS_KEY)
 		zoom(env, 1 / ZOOM, 0);
-	if (keycode == NK_MOINS_KEY)
+	if (keycode == MOINS_KEY)
 		zoom(env, ZOOM, 0);
 	if (keycode == UP_KEY || keycode == DOWN_KEY || keycode == LEFT_KEY
 		|| keycode == RIGHT_KEY)
@@ -71,6 +71,6 @@ void		graphic_loop(t_env *env)
 {
 	mlx_key_hook(env->win, key, env);
 	mlx_mouse_hook(env->win, mouse_zoom, env);
-	mlx_hook(env->win, 0, 17, free_all, env);
+	mlx_hook(env->win, 0, DestroyNotify, free_all, env);
 	mlx_loop(env->mlx);
 }
