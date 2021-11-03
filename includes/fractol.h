@@ -45,8 +45,8 @@ typedef struct		s_set
 {
 	int				M;
 	int				J;
+	int				B;
 	t_cmplx			c;
-	double			radius;
 }					t_set;
 
 /*
@@ -59,7 +59,6 @@ typedef struct		s_set
 
 typedef struct		s_res
 {
-	int				check;
 	int				x;
 	int				y;
 }					t_res;
@@ -68,8 +67,6 @@ typedef struct		s_mouse
 {
 	int			x;
 	int			y;
-	int			lastx;
-	int			lasty;
 }					t_mouse;
 
 typedef struct		s_view
@@ -143,8 +140,9 @@ typedef struct		s_img
 ** main.c
 */
 
-int			free_all(t_env *env);
-void        print(int opt, t_env *env);
+t_env		*init(char **av);
+int			free_all(t_env *env, int x);
+void        print(t_env *env);
 
 /*
 ** graphic_loop.c
@@ -154,6 +152,7 @@ void		graphic_loop(t_env *env);
 int			next_cam(int keycode, t_env *env);
 void		graphic_loop(t_env *env);
 void		zoom(t_env *env, double z, int opt);
+int			mouse_zoom(int button, int x, int y, t_env * env);
 
 /*
 ** mlx_img.c
@@ -166,21 +165,31 @@ void		delete_images(t_img *img, void *mlx_ptr);
 ** init.c
 */
 
-t_env           *init(int ac, char **av);
+void		init_mouse_view(t_env *env);
+void		init_view_set(t_env *env);
+void		init_set(char *opt, t_env *env);
+void		set(t_env *env, char *opt, int i);
+void		init_res(char *set, t_env *env);
 
-int			J_set(t_env *env, t_cmplx z0);
-int			M_set(t_cmplx z0);
+/*
+** fractal.c
+*/
+
+int			j_set(t_cmplx z0, t_env *env);
+int			m_set(t_cmplx z0, t_env *env);
+int			b_set(t_cmplx z0, t_env *env);
+
+/*
+**	render.c
+*/
 
 void 		render(t_env *env);
 
 /*
-**	mouse.c
+**	color.c
 */
 
-
-int		mouse_zoom(int button, int x, int y, t_env * env);
-int		mouse_up(int button, int x, int y, t_env *env);
-int		mouse_move(int x, int y, t_env *env);
+t_v3		palette(int x);
 
 /*
 **	mlx
@@ -204,19 +213,19 @@ int		mouse_move(int x, int y, t_env *env);
 #  define NK_MOINS_KEY 65453
 #  define NK_PLUS_KEY 65451
 # else
-#  define Button1					1
-#  define Button2					2
-#  define Button3					3
-#  define Button4					4
-#  define Button5					5
-#  define KeyPress					2
-#  define KeyRelease				3
-#  define ButtonPress				4
-#  define ButtonRelease				5
-#  define MotionNotify				6
-#  define EnterNotify				7
-#  define LeaveNotify				8
-#  define DestroyNotify				17
+#  define Button1				1
+#  define Button2				2
+#  define Button3				3
+#  define Button4				4
+#  define Button5				5
+#  define KeyPress				2
+#  define KeyRelease			3
+#  define ButtonPress			4
+#  define ButtonRelease			5
+#  define MotionNotify			6
+#  define EnterNotify			7
+#  define LeaveNotify			8
+#  define DestroyNotify			17
 #  define SP_KEY 				49
 #  define ESC_KEY 				53
 #  define LEFT_KEY				123

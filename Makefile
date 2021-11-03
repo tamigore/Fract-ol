@@ -18,13 +18,13 @@ SOURCES =	main.c 			\
 			graphic_loop.c	\
 			fractal.c		\
 			render.c		\
-			mouse.c
+			color.c
 
 SRCS = $(addprefix $(DIR_S),$(SOURCES))
 
 OBJS = $(SRCS:.c=.o)
 
-CFLAGS = -Wall -Werror -Wextra -I $(HEADER) -D NUM_THREADS=$(NUM_THREADS)
+CFLAGS = -Wall -Werror -Wextra -I $(HEADER)
 
 FLAGS = -L $(LIBFT) -lft -L $(LIBMATH) -lmath
 

@@ -1,44 +1,76 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/11/03 16:59:28 by tamigore          #+#    #+#             */
+/*   Updated: 2021/11/03 16:59:29 by tamigore         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fractol.h"
 
-int        free_all(t_env *env)
+t_env	*init(char **av)
 {
-    if (env)
-    {
-        if (env->img)
-            free(env->img);
+	t_env	*env;
+	int		x;
+	int		y;
+
+	env = (t_env *)malloc(sizeof(t_env));
+	if (!env)
+		free_all(env, EXIT_FAILURE);
+	init_set(av[1], env);
+	init_res(av[1], env);
+	env->mlx = mlx_init();
+	if (!env->mlx)
+		free_all(env, EXIT_FAILURE);
+	x = MAX_RES_X;
+	y = MAX_RES_Y;
+	if (env->res.x > x)
+		env->res.x = x;
+	if (env->res.y > y)
+		env->res.y = y;
+	env->win = mlx_new_window(env->mlx, env->res.x, env->res.y, "fractol");
+	if (!env->win)
+		free_all(env, EXIT_FAILURE);
+	env->img = init_img(env);
+	init_mouse_view(env);
+	return (env);
+}
+
+int	free_all(t_env *env, int x)
+{
+	if (!x)
+		x = EXIT_SUCCESS;
+	if (env)
+	{
+		if (env->img)
+			free(env->img);
 		free(env);
-    }
-    exit(EXIT_SUCCESS);
+	}
+	exit(x);
 }
 
-void        print(int opt, t_env *env)
+void	print(t_env *env)
 {
-    if (opt == 0)
-        printf("Usage :./fract-ol -(options: M(Mandelbrot set), J(Julia set :\"J1.02:0.5\"), r(resolution :\"r500.800\")\n");
-    else if (opt == 1)
-    {
-        printf("Parameters:\n");
-        if (env->set.M > 0)
-			printf("Mandelbrot set\n");
-		else if (env->set.J > 0)
-			printf("Julia set: %d\nz0.r = %f // z0.i = %f\n", env->set.J, env->set.c.r, env->set.c.i);
-        printf("Resolution: %d.x | %d.y\n", env->res.x, env->res.y);
-    }
+	ft_putstr("Usage :./fract-ol -M:Mandelbrot set || -B:Burning Ship ||");
+	ft_putstr("-J:Julia set(\"J1.02:0.5\")\n");
+	ft_putstr("You can add r:resolution(\"r500.800\")\n");
+	free_all(env, EXIT_FAILURE);
 }
 
-int         main(int ac, char **av)
+int	main(int ac, char **av)
 {
-    t_env   *env;
+	t_env	*env;
 
 	env = NULL;
-    if (ac < 1 || ac > 2)
-    {
-        print(0, NULL);
-        exit(EXIT_FAILURE);
-    }
-    env = init(ac, av);
+	if (ac != 2)
+		print(NULL);
+	env = init(av);
 	render(env);
 	graphic_loop(env);
-    free_all(env);
-    return (0);
+	free_all(env, EXIT_SUCCESS);
+	return (0);
 }
