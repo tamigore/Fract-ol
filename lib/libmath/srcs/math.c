@@ -12,7 +12,7 @@
 
 #include "libmath.h"
 
-double		ft_pow(double x, int i)
+double	ft_pow(double x, int i)
 {
 	double	nb;
 

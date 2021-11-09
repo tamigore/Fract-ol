@@ -1,5 +1,17 @@
-#ifndef _FRACTOL_H_
-# define _FRACTOL_H_
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   fractol.h                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/11/04 13:19:33 by tamigore          #+#    #+#             */
+/*   Updated: 2021/11/05 16:37:35 by user42           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#ifndef FRACTOL_H
+# define FRACTOL_H
 
 # include <unistd.h>
 # include <fcntl.h>
@@ -24,14 +36,12 @@
 # define RED 2
 # define GREEN 1
 # define BLUE 0
-# define MAX_ITER 255
+# define MAX_ITER 50
 
 # define RES_MIN 300
 # define RES_DEF 1000
-# define MAX_RES_X 2560
-# define MAX_RES_Y 1440
-
-int	mlx_get_screen_size(void *mlx_ptr, int *sizex, int *sizey);
+# define MAX_RES_X 1280
+# define MAX_RES_Y 770
 
 /*
 ** t_set = struct for resolution
@@ -41,13 +51,13 @@ int	mlx_get_screen_size(void *mlx_ptr, int *sizex, int *sizey);
 ** size_y: height of the image
 */
 
-typedef struct		s_set
+typedef struct s_set
 {
-	int				M;
-	int				J;
-	int				B;
-	t_cmplx			c;
-}					t_set;
+	int		m;
+	int		j;
+	int		b;
+	t_cmplx	c;
+}			t_set;
 
 /*
 ** t_res = struct for resolution
@@ -57,19 +67,19 @@ typedef struct		s_set
 ** size_y: height of the image
 */
 
-typedef struct		s_res
+typedef struct s_res
 {
-	int				x;
-	int				y;
-}					t_res;
+	int	x;
+	int	y;
+}			t_res;
 
-typedef struct		s_mouse
+typedef struct s_mouse
 {
-	int			x;
-	int			y;
-}					t_mouse;
+	int	x;
+	int	y;
+}			t_mouse;
 
-typedef struct		s_view
+typedef struct s_view
 {
 	double		xmin;
 	double		xmax;
@@ -79,7 +89,7 @@ typedef struct		s_view
 	double		offx;
 	double		offy;
 	long		max;
-}					t_view;
+}			t_view;
 
 /*
 ** t_env = main struct
@@ -100,8 +110,9 @@ typedef struct		s_view
 ** img = rendered images
 */
 
-typedef struct		s_env
+typedef struct s_env
 {
+	int				p;
 	struct s_set	set;
 	void			*mlx;
 	void			*win;
@@ -109,7 +120,7 @@ typedef struct		s_env
 	struct s_img	*img;
 	struct s_view	view;
 	struct s_mouse	mouse;
-}					t_env;
+}			t_env;
 
 /*
 ** Image
@@ -125,24 +136,24 @@ typedef struct		s_env
 ** next = pointer to next image
 */
 
-typedef struct		s_img
+typedef struct s_img
 {
-	int				size_x;
-	int				size_y;
-	void			*ptr;
-	char			*pixels;
-	int				bpp;
-	int				size_line;
-	int				endian;
-}					t_img;
+	int		size_x;
+	int		size_y;
+	void	*ptr;
+	char	*pixels;
+	int		bpp;
+	int		size_line;
+	int		endian;
+}			t_img;
 
 /*
 ** main.c
 */
 
-t_env		*init(char **av);
+t_env		init(char **av);
 int			free_all(t_env *env, int x);
-void        print(t_env *env);
+void		print(t_env *env);
 
 /*
 ** graphic_loop.c
@@ -152,7 +163,7 @@ void		graphic_loop(t_env *env);
 int			next_cam(int keycode, t_env *env);
 void		graphic_loop(t_env *env);
 void		zoom(t_env *env, double z, int opt);
-int			mouse_zoom(int button, int x, int y, t_env * env);
+int			mouse_zoom(int button, int x, int y, t_env *env);
 
 /*
 ** mlx_img.c
@@ -183,49 +194,57 @@ int			b_set(t_cmplx z0, t_env *env);
 **	render.c
 */
 
-void 		render(t_env *env);
+double		pixel_point(t_env *env, int p, char opt);
+void		render(t_env *env);
 
 /*
 **	color.c
 */
 
-t_v3		palette(int x);
+t_v3		palette(int i, int p, t_v3 color);
 
 /*
 **	mlx
 */
 
 # ifdef LINUX
-#  define STRUCTURENOTIFYMASK 131072
-#  define BUT1_KEY 1
-#  define BUT2_KEY 2
-#  define BUT3_KEY 3
-#  define SCROLLUP_KEY 4
-#  define SCROLLDOWN_KEY 5
-#  define SCROLLLEFT_KEY 6
-#  define SCROLLRIGHT_KEY 7
-#  define SP_KEY 32
-#  define UP_KEY 0xff52
-#  define DOWN_KEY 0xff54
-#  define RIGHT_KEY 65363
-#  define LEFT_KEY 65361
-#  define ESC_KEY 65307
-#  define NK_MOINS_KEY 65453
-#  define NK_PLUS_KEY 65451
+#  define BUTTON1				1
+#  define BUTTON2				2
+#  define BUTTON3				3
+#  define BUTTON4				4
+#  define BUTTON5				5
+#  define KEYPRESS				2
+#  define KEYRELEASE			3
+#  define BUTTONPRESS			4
+#  define BUTTONRELEASE			5
+#  define MOTIONNOTIFY			6
+#  define ENTERNOTIFY			7
+#  define LEAVENOTIFY			8
+#  define DESTROYNOTIFY			17
+#  define SP_KEY 				32
+#  define ESC_KEY 				65307
+#  define LEFT_KEY				65361
+#  define UP_KEY				65362
+#  define RIGHT_KEY				65363
+#  define DOWN_KEY				65364
+#  define MULTI_KEY				65450
+#  define PLUS_KEY				65451
+#  define MOINS_KEY				65453
+#  define DIV_KEY				65455
 # else
-#  define Button1				1
-#  define Button2				2
-#  define Button3				3
-#  define Button4				4
-#  define Button5				5
-#  define KeyPress				2
-#  define KeyRelease			3
-#  define ButtonPress			4
-#  define ButtonRelease			5
-#  define MotionNotify			6
-#  define EnterNotify			7
-#  define LeaveNotify			8
-#  define DestroyNotify			17
+#  define BUTTON1				1
+#  define BUTTON2				2
+#  define BUTTON3				3
+#  define BUTTON4				4
+#  define BUTTON5				5
+#  define KEYPRESS				2
+#  define KEYRELEASE			3
+#  define BUTTONPRESS			4
+#  define BUTTONRELEASE			5
+#  define MOTIONNOTIFY			6
+#  define ENTERNOTIFY			7
+#  define LEAVENOTIFY			8
+#  define DESTROYNOTIFY			17
 #  define SP_KEY 				49
 #  define ESC_KEY 				53
 #  define LEFT_KEY				123
@@ -236,7 +255,6 @@ t_v3		palette(int x);
 #  define PLUS_KEY				69
 #  define MOINS_KEY				78
 #  define DIV_KEY				75
-#  define SP_KEY				49
 # endif
 
 #endif

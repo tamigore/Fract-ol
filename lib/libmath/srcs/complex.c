@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   complex.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/11/04 13:46:12 by tamigore          #+#    #+#             */
+/*   Updated: 2021/11/04 13:46:15 by tamigore         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libmath.h"
 
-t_cmplx		c_new(double x, double y)
+t_cmplx	c_new(double x, double y)
 {
 	t_cmplx	z;
 
@@ -9,7 +21,7 @@ t_cmplx		c_new(double x, double y)
 	return (z);
 }
 
-t_cmplx		c_add(t_cmplx z, t_cmplx c)
+t_cmplx	c_add(t_cmplx z, t_cmplx c)
 {
 	t_cmplx	add;
 
@@ -18,7 +30,7 @@ t_cmplx		c_add(t_cmplx z, t_cmplx c)
 	return (add);
 }
 
-t_cmplx		c_dif(t_cmplx z, t_cmplx c)
+t_cmplx	c_dif(t_cmplx z, t_cmplx c)
 {
 	t_cmplx	dif;
 
@@ -27,7 +39,7 @@ t_cmplx		c_dif(t_cmplx z, t_cmplx c)
 	return (dif);
 }
 
-t_cmplx		c_multi(t_cmplx x, t_cmplx y)
+t_cmplx	c_multi(t_cmplx x, t_cmplx y)
 {
 	t_cmplx	c;
 
@@ -36,7 +48,7 @@ t_cmplx		c_multi(t_cmplx x, t_cmplx y)
 	return (c);
 }
 
-double		c_abs(t_cmplx z)
+double	c_abs(t_cmplx z)
 {
 	double	nb;
 

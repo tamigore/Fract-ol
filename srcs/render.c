@@ -23,7 +23,7 @@ static void	put_pixel_to_img(t_env *env, t_v3 color, int x, int y)
 	env->img->pixels[i + BLUE] = (unsigned int)color.z;
 }
 
-static double	pixel_point(t_env *env, int p, char opt)
+double	pixel_point(t_env *env, int p, char opt)
 {
 	double	z;
 	double	res;
@@ -57,11 +57,11 @@ static int	find_set(t_env *env, t_cmplx z0)
 	int	i;
 
 	i = 0;
-	if (env->set.M)
+	if (env->set.m)
 		i = m_set(z0, env);
-	else if (env->set.J)
+	else if (env->set.j)
 		i = j_set(z0, env);
-	else if (env->set.B)
+	else if (env->set.b)
 		i = b_set(z0, env);
 	else
 		print(env);
@@ -85,7 +85,7 @@ void	render(t_env *env)
 		{
 			z0.r = pixel_point(env, px, 'x');
 			i = find_set(env, z0);
-			color = palette(i);
+			color = palette(i, env->p, color);
 			put_pixel_to_img(env, color, px, py);
 			px++;
 		}

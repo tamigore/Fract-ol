@@ -6,11 +6,11 @@
 #    By: tamigore <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/08 15:04:29 by tamigore          #+#    #+#              #
-#    Updated: 2019/11/19 13:55:56 by tamigore         ###   ########.fr        #
+#    Updated: 2021/11/04 13:37:08 by tamigore         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CC = gcc
+CC = clang
 
 FLAGS = -Wall -Wextra -Werror
 
@@ -39,7 +39,8 @@ SRC/O = ft_atof.c		\
 		ft_free_join.c	\
 		ft_free_rmstr.c	\
 		ft_free_rmchar.c\
-		ft_calloc.c
+		ft_calloc.c		\
+		ft_count_char.c
 
 SRC/I = ft_isalnum.c	\
 		ft_isalpha.c	\
@@ -83,6 +84,7 @@ SRC/S = ft_strlen.c		\
 		ft_strclr.c		\
 		ft_substr.c		\
 		ft_strjoin.c	\
+		ft_strnjoin.c	\
 		ft_strtrim.c	\
 		ft_split.c		\
 		ft_strrev.c		\
