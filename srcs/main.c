@@ -12,44 +12,37 @@
 
 #include "fractol.h"
 
-t_env	*init(char **av)
+t_env	init(char **av)
 {
-	t_env	*env;
+	t_env	env;
 	int		x;
 	int		y;
 
-	env = (t_env *)malloc(sizeof(t_env));
-	if (!env)
-		free_all(env, EXIT_FAILURE);
-	init_set(av[1], env);
-	init_res(av[1], env);
-	env->mlx = mlx_init();
-	if (!env->mlx)
-		free_all(env, EXIT_FAILURE);
+	init_set(av[1], &env);
+	init_res(av[1], &env);
+	env.mlx = mlx_init();
+	if (!env.mlx)
+		free_all(&env, EXIT_FAILURE);
 	x = MAX_RES_X;
 	y = MAX_RES_Y;
-	if (env->res.x > x)
-		env->res.x = x;
-	if (env->res.y > y)
-		env->res.y = y;
-	env->win = mlx_new_window(env->mlx, env->res.x, env->res.y, "fractol");
-	if (!env->win)
-		free_all(env, EXIT_FAILURE);
-	env->img = init_img(env);
-	init_mouse_view(env);
+	if (env.res.x > x)
+		env.res.x = x;
+	if (env.res.y > y)
+		env.res.y = y;
+	env.win = mlx_new_window(env.mlx, env.res.x, env.res.y, "fractol");
+	if (!env.win)
+		free_all(&env, EXIT_FAILURE);
+	env.img = init_img(&env);
+	init_mouse_view(&env);
 	return (env);
 }
 
 int	free_all(t_env *env, int x)
 {
-	if (!x)
-		x = EXIT_SUCCESS;
-	if (env)
-	{
-		if (env->img)
-			free(env->img);
-		free(env);
-	}
+	if (env->win)
+		mlx_destroy_window(env->mlx, env->win);
+	if (env->img)
+		delete_images(env->img, env->mlx);
 	exit(x);
 }
 
@@ -63,14 +56,13 @@ void	print(t_env *env)
 
 int	main(int ac, char **av)
 {
-	t_env	*env;
+	t_env	env;
 
-	env = NULL;
 	if (ac != 2)
 		print(NULL);
 	env = init(av);
-	render(env);
-	graphic_loop(env);
-	free_all(env, EXIT_SUCCESS);
+	render(&env);
+	graphic_loop(&env);
+	free_all(&env, EXIT_SUCCESS);
 	return (0);
 }

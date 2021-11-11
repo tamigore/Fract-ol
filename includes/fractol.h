@@ -36,12 +36,12 @@
 # define RED 2
 # define GREEN 1
 # define BLUE 0
-# define MAX_ITER 255
+# define MAX_ITER 50
 
 # define RES_MIN 300
 # define RES_DEF 1000
-# define MAX_RES_X 2560
-# define MAX_RES_Y 1440
+# define MAX_RES_X 1280
+# define MAX_RES_Y 770
 
 /*
 ** t_set = struct for resolution
@@ -81,14 +81,14 @@ typedef struct s_mouse
 
 typedef struct s_view
 {
-	double	xmin;
-	double	xmax;
-	double	ymin;
-	double	ymax;
-	double	zoom;
-	double	offx;
-	double	offy;
-	long	max;
+	double		xmin;
+	double		xmax;
+	double		ymin;
+	double		ymax;
+	double		zoom;
+	double		offx;
+	double		offy;
+	long		max;
 }			t_view;
 
 /*
@@ -112,6 +112,7 @@ typedef struct s_view
 
 typedef struct s_env
 {
+	int				p;
 	struct s_set	set;
 	void			*mlx;
 	void			*win;
@@ -150,7 +151,7 @@ typedef struct s_img
 ** main.c
 */
 
-t_env		*init(char **av);
+t_env		init(char **av);
 int			free_all(t_env *env, int x);
 void		print(t_env *env);
 
@@ -193,13 +194,14 @@ int			b_set(t_cmplx z0, t_env *env);
 **	render.c
 */
 
+double		pixel_point(t_env *env, int p, char opt);
 void		render(t_env *env);
 
 /*
 **	color.c
 */
 
-t_v3		palette(int x);
+t_v3		palette(int i, int p, t_v3 color);
 
 /*
 **	mlx
@@ -244,6 +246,7 @@ t_v3		palette(int x);
 #  define LEAVENOTIFY			8
 #  define DESTROYNOTIFY			17
 #  define ESC_KEY 				53
+#  define SP_KEY 				49
 #  define LEFT_KEY				123
 #  define UP_KEY				126
 #  define RIGHT_KEY				124
@@ -252,7 +255,6 @@ t_v3		palette(int x);
 #  define PLUS_KEY				69
 #  define MOINS_KEY				78
 #  define DIV_KEY				75
-#  define SP_KEY				49
 # endif
 
 #endif

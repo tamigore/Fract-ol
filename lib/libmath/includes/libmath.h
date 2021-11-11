@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef _LIBMATH_H_
-# define _LIBMATH_H_
+#ifndef LIBMATH_H
+# define LIBMATH_H
 
 # include <string.h>
 # include <stdlib.h>
@@ -33,7 +33,7 @@
 ** imag = {R} y * i {I}
 */
 
-typedef struct	s_cmplx
+typedef struct s_cmplx
 {
 	double		r;
 	double		i;
@@ -44,7 +44,7 @@ typedef struct	s_cmplx
 ** v3 = {a, b, c};
 */
 
-typedef struct	s_v3
+typedef struct s_v3
 {
 	double		x;
 	double		y;

@@ -16,12 +16,12 @@ int	mouse_zoom(int button, int x, int y, t_env *env)
 {
 	env->mouse.x = x;
 	env->mouse.y = y;
-	if (button == 4)
+	if (button == 5)
 	{
 		zoom(env, 1 / ZOOM, 1);
 		render(env);
 	}
-	else if (button == 5)
+	else if (button == 4)
 	{
 		zoom(env, ZOOM, 2);
 		render(env);
@@ -35,23 +35,17 @@ void	zoom(t_env *env, double z, int opt)
 {
 	double	w;
 	double	h;
-	double	n;
 
-	w = (env->view.xmax - env->view.xmin) * (env->view.zoom);
-	h = (env->view.ymax - env->view.ymin) * (env->view.zoom);
 	env->view.zoom *= z;
-	n = 1;
-	if (opt == 2)
-		n = -1;
-	if (opt)
+	if (opt > 0)
 	{
-		env->view.offx += n * (3.5 * ((double)env->mouse.x / env->res.x) - 2)
-			* env->view.zoom;
-		env->view.offy += n * (2 * ((double)env->mouse.y / env->res.y) - 1)
-			* env->view.zoom;
+		env->view.offx = pixel_point(env, env->mouse.x, 'x');
+		env->view.offy = pixel_point(env, env->mouse.y, 'y');
 	}
 	else
 	{
+		w = (env->view.xmax - env->view.xmin) * (env->view.zoom);
+		h = (env->view.ymax - env->view.ymin) * (env->view.zoom);
 		env->view.offx -= ((env->res.x / 2) / env->res.x)
 			* ((env->view.xmax - env->view.xmin) * (env->view.zoom) - w);
 		env->view.offy -= ((env->res.y / 2) / env->res.y)
@@ -81,7 +75,7 @@ int	key(int keycode, t_env *env)
 	if (keycode == ESC_KEY)
 		free_all(env, EXIT_SUCCESS);
 	if (keycode == MULTI_KEY)
-		if (env->view.max < 10000)
+		if (env->view.max < 1000)
 			env->view.max *= 2;
 	if (keycode == DIV_KEY)
 		if (env->view.max / 2 >= 2)
@@ -93,6 +87,13 @@ int	key(int keycode, t_env *env)
 	if (keycode == UP_KEY || keycode == DOWN_KEY || keycode == LEFT_KEY
 		|| keycode == RIGHT_KEY)
 		move(keycode, env);
+	if (keycode == SP_KEY)
+	{
+		if (env->p == 1)
+			env->p = 0;
+		else
+			env->p = 1;
+	}
 	render(env);
 	return (0);
 }

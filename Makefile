@@ -39,12 +39,10 @@ LINUX_FLAGS = -L $(LIB)minilibx-linux -lmlx -lm -lX11 -lXext -lpthread
 UNAME := $(shell uname)
 
 ifeq ($(UNAME),Darwin)
-	NUM_THREADS = $(shell sysctl -n hw.ncpu)
 	CFLAGS += $(MACOS_MACRO)
 	FLAGS += $(MACOS_FLAGS)
 endif
 ifeq ($(UNAME),Linux)
-	NUM_THREADS = $(shell nproc --all)
 	CFLAGS += $(LINUX_MACRO)
 	FLAGS += $(LINUX_FLAGS)
 endif
@@ -52,6 +50,7 @@ endif
 all: $(NAME)
 
 $(NAME): $(OBJS) $(HEADER) $(LIBFT)
+	make -C $(LIBMATH)
 	make -C $(LIBFT)
 	$(CC) $(CFLAGS) $(OBJS) $(FLAGS) -o $(NAME)
 
@@ -72,6 +71,8 @@ clean:
 fclean: clean
 	@rm -f $(NAME)
 	@make fclean -C $(LIBFT)
-	@make clean -C $(LIBMATH)
+	@make fclean -C $(LIBMATH)
 
 re: fclean all
+
+.PHONY: re all clean fclean norme

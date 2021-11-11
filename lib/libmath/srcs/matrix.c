@@ -12,7 +12,7 @@
 
 #include "libmath.h"
 
-double		**mat_init(void)
+double	**mat_init(void)
 {
 	double	**mat;
 	int		i;
@@ -31,7 +31,7 @@ double		**mat_init(void)
 	return (mat);
 }
 
-void		mat_free(double **mat)
+void	mat_free(double **mat)
 {
 	int		i;
 
@@ -41,7 +41,7 @@ void		mat_free(double **mat)
 	free(mat);
 }
 
-double		*mat_fil(double a, double b, double c, double d)
+double	*mat_fil(double a, double b, double c, double d)
 {
 	double	*tab;
 
@@ -53,7 +53,7 @@ double		*mat_fil(double a, double b, double c, double d)
 	return (tab);
 }
 
-double		*mat_get_column(double **mat, int i)
+double	*mat_get_column(double **mat, int i)
 {
 	double	*col;
 
@@ -69,7 +69,7 @@ double		*mat_get_column(double **mat, int i)
 	return (col);
 }
 
-double		tab4_x_tab4(double	*a, double *b)
+double	tab4_x_tab4(double	*a, double *b)
 {
 	return (a[0] * b[0] + a[1] * b[1] + a[2] * b[2] + a[3] * b[3]);
 }

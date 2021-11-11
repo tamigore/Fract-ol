@@ -23,7 +23,7 @@ static void	put_pixel_to_img(t_env *env, t_v3 color, int x, int y)
 	env->img->pixels[i + BLUE] = (unsigned int)color.z;
 }
 
-static double	pixel_point(t_env *env, int p, char opt)
+double	pixel_point(t_env *env, int p, char opt)
 {
 	double	z;
 	double	res;
@@ -85,7 +85,7 @@ void	render(t_env *env)
 		{
 			z0.r = pixel_point(env, px, 'x');
 			i = find_set(env, z0);
-			color = palette(i);
+			color = palette(i, env->p, color);
 			put_pixel_to_img(env, color, px, py);
 			px++;
 		}

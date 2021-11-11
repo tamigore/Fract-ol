@@ -6,7 +6,7 @@
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 16:59:18 by tamigore          #+#    #+#             */
-/*   Updated: 2021/11/03 16:59:20 by tamigore         ###   ########.fr       */
+/*   Updated: 2021/11/05 16:51:24 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	set(t_env *env, char *opt, int i)
 	{
 		env->set.j = 1;
 		i++;
-		if (ft_isdigit(opt[i]))
+		if (ft_isdigit(opt[i]) || opt[i] == '-')
 		{
 			env->set.c.r = ft_atof(&opt[i]);
 			while (opt[i] && (opt[i] != ':'))
@@ -76,7 +76,7 @@ void	init_set(char *opt, t_env *env)
 	env->set.c.r = 0;
 	if (opt[i] == '-')
 		set(env, opt, ++i);
-	if (!env->set.m && env->set.j && env->set.b)
+	if (!env->set.m && !env->set.j && !env->set.b)
 		print(env);
 }
 
@@ -92,8 +92,8 @@ void	init_view_set(t_env *env)
 	}
 	else if (env->set.j)
 	{
-		env->view.xmin = -2;
-		env->view.xmax = 2;
+		env->view.xmin = -1.5;
+		env->view.xmax = 1.5;
 		env->view.ymin = -1;
 		env->view.ymax = 1;
 		env->view.offx = 0.25;
@@ -117,5 +117,6 @@ void	init_mouse_view(t_env *env)
 	env->view.offy = 0;
 	env->view.offx = 0;
 	env->view.max = MAX_ITER;
+	env->p = 1;
 	init_view_set(env);
 }
