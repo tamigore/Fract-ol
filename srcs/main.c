@@ -39,6 +39,8 @@ t_env	init(char **av)
 
 int	free_all(t_env *env, int x)
 {
+	if (!env)
+		exit(EXIT_FAILURE);
 	if (env->win)
 		mlx_destroy_window(env->mlx, env->win);
 	if (env->img)
@@ -58,7 +60,7 @@ int	main(int ac, char **av)
 {
 	t_env	env;
 
-	if (ac != 2)
+	if (ac != 2 || !av[1])
 		print(NULL);
 	env = init(av);
 	render(&env);

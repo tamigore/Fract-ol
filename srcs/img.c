@@ -36,7 +36,8 @@ void	delete_images(t_img *img, void *mlx_ptr)
 		return ;
 	if (img)
 	{
-		mlx_destroy_image(mlx_ptr, img->ptr);
+		if (img->ptr)
+			mlx_destroy_image(mlx_ptr, img->ptr);
 		free(img);
 	}
 }

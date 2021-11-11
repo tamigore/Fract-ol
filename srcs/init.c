@@ -73,11 +73,17 @@ void	init_set(char *opt, t_env *env)
 	env->set.j = 0;
 	env->set.b = 0;
 	env->set.c.r = 0;
-	env->set.c.r = 0;
+	env->set.c.i = 0;
 	if (opt[i] == '-')
 		set(env, opt, ++i);
+	else
+		print(NULL);
 	if (!env->set.m && !env->set.j && !env->set.b)
-		print(env);
+		print(NULL);
+	if (env->set.c.r > 1.5 || env->set.c.r < -1.5)
+		env->set.c.r = -0.8;
+	if (env->set.c.i > 1 || env->set.c.r < -1)
+		env->set.c.i = 0.125;
 }
 
 void	init_view_set(t_env *env)
