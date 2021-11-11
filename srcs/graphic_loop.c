@@ -101,6 +101,6 @@ void	graphic_loop(t_env *env)
 {
 	mlx_key_hook(env->win, key, env);
 	mlx_mouse_hook(env->win, mouse_zoom, env);
-	mlx_hook(env->win, 0, DestroyNotify, free_all, env);
+	mlx_hook(env->win, 0, DESTROYNOTIFY, free_all, env);
 	mlx_loop(env->mlx);
 }

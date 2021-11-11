@@ -24,7 +24,7 @@ SRCS = $(addprefix $(DIR_S),$(SOURCES))
 
 OBJS = $(SRCS:.c=.o)
 
-CFLAGS = -Wall -Werror -Wextra -I $(HEADER)
+CFLAGS = -Wall -Werror -Wextra -I $(HEADER) # -g -fsanitize=address
 
 FLAGS = -L $(LIBFT) -lft -L $(LIBMATH) -lmath
 

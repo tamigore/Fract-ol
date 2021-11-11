@@ -57,11 +57,11 @@ static int	find_set(t_env *env, t_cmplx z0)
 	int	i;
 
 	i = 0;
-	if (env->set.M)
+	if (env->set.m)
 		i = m_set(z0, env);
-	else if (env->set.J)
+	else if (env->set.j)
 		i = j_set(z0, env);
-	else if (env->set.B)
+	else if (env->set.b)
 		i = b_set(z0, env);
 	else
 		print(env);

@@ -41,10 +41,10 @@ void	init_res(char *set, t_env *env)
 void	set(t_env *env, char *opt, int i)
 {
 	if (opt[i] == 'M')
-		env->set.M = 1;
+		env->set.m = 1;
 	else if (opt[i] == 'J')
 	{
-		env->set.J = 1;
+		env->set.j = 1;
 		i++;
 		if (ft_isdigit(opt[i]))
 		{
@@ -61,7 +61,7 @@ void	set(t_env *env, char *opt, int i)
 		}
 	}
 	else if (opt[i] == 'B')
-		env->set.B = 1;
+		env->set.b = 1;
 }
 
 void	init_set(char *opt, t_env *env)
@@ -69,20 +69,20 @@ void	init_set(char *opt, t_env *env)
 	int	i;
 
 	i = 0;
-	env->set.M = 0;
-	env->set.J = 0;
-	env->set.B = 0;
+	env->set.m = 0;
+	env->set.j = 0;
+	env->set.b = 0;
 	env->set.c.r = 0;
 	env->set.c.r = 0;
 	if (opt[i] == '-')
 		set(env, opt, ++i);
-	if (!env->set.M && env->set.J && env->set.B)
+	if (!env->set.m && env->set.j && env->set.b)
 		print(env);
 }
 
 void	init_view_set(t_env *env)
 {
-	if (env->set.M)
+	if (env->set.m)
 	{
 		env->view.xmin = -2;
 		env->view.xmax = 2;
@@ -90,7 +90,7 @@ void	init_view_set(t_env *env)
 		env->view.ymax = 1;
 		env->view.offx = -0.25;
 	}
-	else if (env->set.J)
+	else if (env->set.j)
 	{
 		env->view.xmin = -2;
 		env->view.xmax = 2;
@@ -98,7 +98,7 @@ void	init_view_set(t_env *env)
 		env->view.ymax = 1;
 		env->view.offx = 0.25;
 	}
-	else if (env->set.B)
+	else if (env->set.b)
 	{
 		env->view.xmin = -2;
 		env->view.xmax = 2;
