@@ -6,7 +6,7 @@
 /*   By: tamigore <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/09 12:47:06 by tamigore          #+#    #+#             */
-/*   Updated: 2021/11/11 13:51:11 by tamigore         ###   ########.fr       */
+/*   Updated: 2021/11/11 18:20:45 by tamigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -221,16 +221,16 @@ t_v3		palette(int i, int p, t_v3 color);
 #  define ENTERNOTIFY			7
 #  define LEAVENOTIFY			8
 #  define DESTROYNOTIFY			17
-#  define SP_KEY 				49
+#  define SP_KEY 				32
 #  define ESC_KEY 				65307
 #  define LEFT_KEY				65361
-#  define UP_KEY				126
+#  define UP_KEY				65362
 #  define RIGHT_KEY				65363
-#  define DOWN_KEY				125
-#  define MULTI_KEY				67
-#  define PLUS_KEY				65453
+#  define DOWN_KEY				65364
+#  define MULTI_KEY				65450
+#  define PLUS_KEY				65451
 #  define MOINS_KEY				65453
-#  define DIV_KEY				75
+#  define DIV_KEY				65455
 # else
 #  define BUTTON1				1
 #  define BUTTON2				2
